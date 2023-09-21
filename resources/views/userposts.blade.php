@@ -20,12 +20,12 @@
                         @csrf
                         
                         <div class="form-group">
-                            <label for="post_title">Post Title</label>
+                            <label for="post_title">Title:</label>
                             <input type="text" name="title" id="post_title" class="form-control">
                         </div>
 
                         <div class="form-group">
-                            <label for="your_comment">Your Comment</label>
+                            <label for="your_comment">Body:</label>
                             <textarea name="message" id="your_comment" class="form-control" rows="5"></textarea>
                         </div>
 

@@ -4,6 +4,7 @@ use App\Http\Controllers\Controller;
 use Yoeunes\Toastr\Facades\Toastr;
 use Illuminate\Http\Request;
 use App\Models\Post; // Replace 'Post' with your actual model name if different
+use Ramsey\Uuid\Type\Integer;
 
 class PostController extends Controller
 {
@@ -15,33 +16,42 @@ class PostController extends Controller
 
     // Store a newly created post in the database
     public function store(Request $request)
-{
-    // Validate the form data
-    $validatedData = $request->validate([
-        'title' => 'required|string|max:255',
-        'message' => 'required|string',
-    ]);
+    { 
+        // Validate the form data
+        $validatedData = $request->validate([
+            'title' => 'required|string|max:255',
+            'message' => 'required|string',
+        ]);
 
-    // Create a new post using the validated data
-    $post = new Post;
-    $post->title = $validatedData['title'];
-    $post->message = $validatedData['message'];
+        // Create a new post using the validated data
+        $post = new Post;
+        $post->title = $validatedData['title'];
+        $post->message = $validatedData['message'];
+        $post->user_id = auth()->id();
 
-    // Save the post to the database
-    $post->save();
 
-    // Check if the post was successfully saved
-    if ($post) {
-        // Show a success Toastr notification
-        Toastr::success('Post created successfully!', 'Success');
-    } else {
-        // Show an error Toastr notification
-        Toastr::error('Failed to create the post. Please try again.', 'Error');
+        // Save the post to the database
+        $post->save();
+
+        // Check if the post was successfully saved
+        if ($post) {
+            // Show a success Toastr notification
+            Toastr::success('Post created successfully!', 'Success');
+        } else {
+            // Show an error Toastr notification
+            Toastr::error('Failed to create the post. Please try again.', 'Error');
+        }
+
+        // Redirect back to the form or any other page as needed
+        return redirect()->route('dashboard');
     }
 
-    // Redirect back to the form or any other page as needed
-    return redirect()->route('dashboard');
-}
+    public function list() 
+    {
+        $posts = Post::with('user')->get();
+
+        return $posts;
+    }
 
     // Other methods for displaying, editing, and deleting posts can be added here.
 }

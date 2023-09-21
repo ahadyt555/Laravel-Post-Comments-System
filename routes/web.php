@@ -30,9 +30,15 @@ Route::middleware('auth')->group(function () {
     Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
     Route::patch('/profile', [ProfileController::class, 'update'])->name('profile.update');
     Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
+
+    Route::group(['prefix' => 'posts', 'as' => 'posts.'], function() {
+        Route::get('/', [PostController::class, 'create'])->name('create');
+        Route::post('/',[PostController::class,'store'])->name('save');
+        Route::get('/list', [PostController::class, 'list'])->name('list');    
+    });
+    
 });
-Route::get('/posts', [PostController::class, 'create'])->name('posts.create');
-Route::post('/posts',[PostController::class,'store'])->name('posts.save');
+
 
 
 
