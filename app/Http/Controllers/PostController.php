@@ -10,8 +10,7 @@ class PostController extends Controller
 {
 
     public function create() {
-        return view("userposts");
-    }
+        return view("manageposts.userposts");    }
 
     public function index() {
         $messages = Post::all();
