@@ -13,7 +13,7 @@
 <body>
     <div class="container">
         <h2>Edit User Posts</h2>
-        <form action="{{ route('manageposts.update', ['id' => $post->id]) }}" method="POST">
+        <form action="{{ route('manageposts.update', ['id' => $post->id]) }}" method="POST"  enctype="multipart/form-data">
             @csrf
             @method('PUT')
             <div class="form-group">
@@ -24,6 +24,14 @@
                 <label for="message">Message:</label>
                 <textarea class="form-control" id="message" name="message">{{ \Illuminate\Support\Str::limit ($post->message, 30) }}</textarea>
             </div>
+            <div class="form-group">
+					<label for="current_image">Current Image:</label>
+					<img src="{{ asset($post->file_path) }}" alt="Current Image" class="img-fluid">
+				</div>
+				<div class="form-group">
+					<label for="new_image">New Image:</label>
+					<input type="file" class="form-control" id="new_image" name="new_file_path">
+				</div>
             <button type="submit" class="btn btn-primary">Save</button>
         </form>
     </div>
