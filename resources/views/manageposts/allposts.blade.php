@@ -26,7 +26,10 @@
                         <h6 class="card-title" id="title">{{ $data->title }}</h6>
                         <h5 class="card-title">Body:</h5>
                         <p class="card-text" style="max-lines: 1;">{{ \Illuminate\Support\Str::limit ($data->message, 30) }}</p>
-                        <a href="{{ route('manageposts.show', ['id' => $data->id]) }}" class=" btn-red position-absolute" style="bottom: 10px; right: 10px;">View More</a>
+                        <h5>Image:</h5>
+                            <img src="{{ asset($data->file_path)}}" alt="Image" class="img-fluid">
+                            <a href="{{ route('manageposts.show', ['id' => $data->id]) }}" class="btn-red position-absolute" style="bottom: 10px; right: 10px;">View More</a>
+                        </div>
                     </div>
                 </div>
             </div>

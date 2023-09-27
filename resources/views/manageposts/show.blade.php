@@ -26,9 +26,15 @@
                         <h6 class="card-title">{{ $data->title }}</h6>
                         <h5 class="card-title">Body:</h5>
                         <p class="card-text" style="max-lines: 1;">{{ $data->message }}</p>
+                        <h5>Image:</h5>
+                            <img src="{{ asset($data->file_path)}}" alt="Image" class="img-fluid">
                         @if($data->user_id === $user)
                         <a href="{{ route('manageposts.edit', ['id' => $data->id]) }}" class="btn btn-sm btn-info position-absolute" style="bottom: 10px; right: 10px;">Edit Post</a>
                         @endif
+                        @csrf
+                    @method("GET")
+                        <a href="{{ route('manageposts.destroy', ['id' => $data->id]) }}" class="btn btn-sm btn-info position-absolute" style="bottom: 10px; right: 10px;">Delete Post</a>
+
                     </div>
                 </div>
             </div>

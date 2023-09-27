@@ -16,7 +16,7 @@
 
                 <div class="card-body">
                     @auth
-                    <form method="POST" action="/posts">
+                    <form class="contact-form" method="POST" action="/posts" enctype="multipart/form-data">
                         @csrf
                         
                         <div class="form-group">
@@ -27,6 +27,10 @@
                         <div class="form-group">
                             <label for="your_comment">Body:</label>
                             <textarea name="message" id="your_comment" class="form-control" rows="5"></textarea>
+                        </div>
+                        <div class="form-group">
+                            <label for="post_image">Image:</label>
+                            <input type="file" name="file_path" id="post_image" class="form-control" accept="image/*">
                         </div>
 
                         <button type="submit" class="btn btn-primary">Submit</button>

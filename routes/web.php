@@ -31,6 +31,7 @@ use Illuminate\Support\Facades\Route;
         Route::get('/{id}', [PostController::class,'show'])->name('show');
         Route::get('/edit/{id}', [PostController::class,'edit'])->name('edit');
         Route::put('/update/{id}', [PostController::class,'update'])->name('update');
+        Route::get('/delete/{id}' , [PostController::class, 'destroy' ])->name('destroy');
     });
 
 
