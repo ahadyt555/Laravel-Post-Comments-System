@@ -25,7 +25,6 @@ class PostController extends Controller {
     public function update(StorePostRequest $request, $id) {
         $request->validated();
         $post = Post::find($id);
-
         if (!$post) {
             return redirect()->back()->with("error", "Post not found");
         }
