@@ -68,7 +68,7 @@ class PostController extends Controller {
                                   'message' => $validatedData['message'],
                                   'file_path' => asset('storage/' . str_replace('public/', '', $imagePath)),
                                   'user_id' => $user_id, ]);
-            if ($post) {
+            if ($post->create()) {
                 Toastr::success("Post created successfully!", "Success");
             } else {
                 Toastr::error("Failed to create the post. Please try again.", "Error");
