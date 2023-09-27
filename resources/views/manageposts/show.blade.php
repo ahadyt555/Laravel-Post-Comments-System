@@ -29,7 +29,8 @@
                         <h5>Image:</h5>
                             <img src="{{ asset($data->file_path)}}" alt="Image" class="img-fluid">
                         @if($data->user_id === $user)
-                        <a href="{{ route('manageposts.edit', ['id' => $data->id]) }}" class="btn btn-sm btn-info position-absolute" style="bottom: 10px; right: 10px;">Edit Post</a>
+                        <a href="{{ route('manageposts.edit', ['id' => $data->id]) }}" class="btn btn-sm btn-info">Edit Post</a>
+                        <br>                        
                         @endif
                         @csrf
                     @method("GET")

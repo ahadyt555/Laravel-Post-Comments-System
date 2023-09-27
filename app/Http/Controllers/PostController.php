@@ -39,10 +39,10 @@ class PostController extends Controller {
                 Storage::delete($post->file_path);
             }
             $imagePath = $request->file("new_file_path")->store("public/images");
-            $post->file_path = "storage/" . str_replace("public/", "", $imagePath);
+            $post->file_path = asset('storage/' . str_replace('public/', '', $imagePath));
         }
         $post->save();
-        return redirect()->route("manageposts.edit", ["id" => $post->id])->with("success", "Post updated successfully");
+        return redirect('postedit')->with("success", "Post updated successfully");
     }
     public function destroy(Request $request, $id){
         $post = POST::find($id);
@@ -66,7 +66,7 @@ class PostController extends Controller {
             $imagePath = $request->file('file_path')->store('public/images');
             $post = Post::create(['title' => $validatedData['title'],
                                   'message' => $validatedData['message'],
-                                  'file_path' => 'storage/' . str_replace('public/', '', $imagePath),
+                                  'file_path' => asset('storage/' . str_replace('public/', '', $imagePath)),
                                   'user_id' => $user_id, ]);
             if ($post) {
                 Toastr::success("Post created successfully!", "Success");

@@ -34,14 +34,6 @@ use Illuminate\Support\Facades\Route;
         Route::get('/delete/{id}' , [PostController::class, 'destroy' ])->name('destroy');
     });
 
-
-
-
-
-
-
 // Route::post('/store-post', 'PostController@store')->name('store-post');
-// routes/web.php
-
 
 require __DIR__.'/auth.php';
