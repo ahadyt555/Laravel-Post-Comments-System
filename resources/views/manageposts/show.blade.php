@@ -23,7 +23,7 @@
                 <div class="card mb-6">
                     <div class="card-body">
                     <h5 class="card-title">Post Title:</h5>
-                        <h6 class="card-title">{{ $data->title }}</h6>
+                        <p class="card-title">{{ $data->title }}</p>
                         <h5 class="card-title">Body:</h5>
                         <p class="card-text" style="max-lines: 1;">{{ $data->message }}</p>
                         <h5>Image:</h5>

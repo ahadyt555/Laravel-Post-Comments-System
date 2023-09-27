@@ -34,15 +34,20 @@ class PostController extends Controller {
             $request->validate([
                 "new_file_path" => "image|mimes:jpeg,png,jpg,gif|max:2048",
             ]);
-
             if ($post->file_path) {
                 Storage::delete($post->file_path);
             }
-            $imagePath = $request->file("new_file_path")->store("public/images");
+            $imagePath = $request->file("new_file_path")->storeAs("public/");
             $post->file_path = asset('storage/' . str_replace('public/', '', $imagePath));
         }
         $post->save();
-        return redirect('postedit')->with("success", "Post updated successfully");
+        if($post->save()){
+            Toastr::success("Post updated successfully!", "Success");
+        }
+        else{
+            Toastr::error("Post Not updated", "Error");
+        }
+        return redirect('postedit');
     }
     public function destroy(Request $request, $id){
         $post = POST::find($id);

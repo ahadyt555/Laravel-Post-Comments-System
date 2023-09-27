@@ -32,7 +32,7 @@
 					<label for="new_image">New Image:</label>
 					<input type="file" class="form-control" id="new_image" name="new_file_path">
 				</div>
-            <button type="submit" class="btn btn-primary">Save</button>
+            <button type="submit" class="btn btn-primary">Save Changes</button>
         </form>
     </div>
 </body>
