@@ -2,6 +2,7 @@
 use resources\views\manageposts;
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\PostController;
+use App\Http\Controllers\CommentController;
 use Illuminate\Support\Facades\Route;
 
     Route::get('/', function () {
@@ -33,6 +34,7 @@ use Illuminate\Support\Facades\Route;
         Route::put('/update/{id}', [PostController::class,'update'])->name('update');
         Route::get('/delete/{id}' , [PostController::class, 'destroy' ])->name('destroy');
     });
+    Route::post('/comments/create',     [CommentController::class, 'create'])->name('comments.create');
 
 // Route::post('/store-post', 'PostController@store')->name('store-post');
 
