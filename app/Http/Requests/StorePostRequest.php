@@ -24,7 +24,25 @@ class StorePostRequest extends FormRequest
         return [
             'title' => 'required|string|max:255',
             'message' => 'required|string',
-           'file_path' => 'required|image|mimes:jpeg,png,jpg,gif|max:2048'
-               ];
+            'file_path' => 'required|image|mimes:jpeg,png,jpg,gif|max:2048',
+        ];
+    }
+
+    /**
+     * Get custom error messages for validation rules.
+     *
+     * @return array<string, string>
+     */
+    public function messages(): array
+    {
+        return [
+            'title.required' => 'The title field is required.',
+            'title.max' => 'The title field must not exceed 255 characters.',
+            'message.required' => 'The message field is required.',
+            'file_path.required' => 'An image is required.',
+            'file_path.image' => 'The selected file must be an image.',
+            'file_path.mimes' => 'Only JPEG, PNG, JPG, and GIF images are allowed.',
+            'file_path.max' => 'The image size should not exceed 2MB.',
+        ];
     }
 }

@@ -16,11 +16,10 @@ return new class extends Migration
             $table->string('title')->nullable();
             $table->text('message')->nullable();
             $table->string('file_path')->nullable();
-            $table->unsignedBigInteger('user_id')->nullable();
+            $table->unsignedBigInteger('user_id');
             $table->timestamps();
             $table->softDeletes();
-
-
+            $table->foreign('user_id')->references('id')->on('users')->onDelete('cascade');
         });
     }
 

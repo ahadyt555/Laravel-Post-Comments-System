@@ -13,25 +13,31 @@
 <body>
     <div class="container">
         <h2>Edit User Posts</h2>
-        <form action="{{ route('manageposts.update', ['id' => $post->id]) }}" method="POST"  enctype="multipart/form-data">
+        <form action="{{ route('manageposts.update', ['id' => $post->id]) }}" method="POST" enctype="multipart/form-data">
             @csrf
             @method('PUT')
+
             <div class="form-group">
                 <label for="title">Title:</label>
                 <input type="text" class="form-control" id="title" name="title" value="{{ $post->title }}">
             </div>
+
             <div class="form-group">
                 <label for="message">Message:</label>
                 <textarea class="form-control" id="message" name="message">{{ \Illuminate\Support\Str::limit ($post->message, 30) }}</textarea>
             </div>
+
             <div class="form-group">
-					<label for="current_image">Current Image:</label>
-					<img src="{{ asset($post->file_path) }}" alt="Current Image" class="img-fluid">
-				</div>
-				<div class="form-group">
-					<label for="new_image">New Image:</label>
-					<input type="file" class="form-control" id="new_image" name="new_file_path">
-				</div>
+                <label for="current_image">Current Image:</label>
+                <img src="{{ asset($post->file_path) }}" alt="Current Image" class="img-fluid">
+            </div>
+
+            <div class="form-group">
+                <label for="new_image">New Image:</label>
+                <input type="file" class="form-control-file" id="new_image" name="new_file_path">
+                <!-- You can add validation error message here if needed -->
+            </div>
+
             <button type="submit" class="btn btn-primary">Save Changes</button>
         </form>
     </div>
