@@ -49,14 +49,14 @@
                         <a href="{{ route('manageposts.destroy', ['id' => $data->id]) }}" class="btn btn-sm btn-info position-absolute" style="bottom: 10px; right: 10px;">Delete Post</a>
                         @endif
 
-    <div class="row mt-4">
-        <div class="col-md-6">
-            <form class="contact-form" method="POST" action="/comments/create" enctype="multipart/form-data">
-                @csrf
-                @method("POST")
+                <div class="row mt-4">
+                    <div class="col-md-6">
+                        <form class="contact-form" method="POST" action="/comments/create/{post_id}" enctype="multipart/form-data">
+                            @csrf
+                            @method("POST")
                 <div class="form-group">
                     <label for="your_comment">Add A Comment:</label>
-                    <textarea name="body" id="your_comment" class="form-control" rows="3"></textarea>
+                    <input name="body" id="your_comment" class="form-control" rows="3"></input>
                 </div>
                 <button type="submit" class="btn btn-sm btn-primary">Publish Comment</button>
             </form>

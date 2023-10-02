@@ -22,7 +22,7 @@ class PostController extends Controller
         return view('manageposts.allposts', compact('messages'));
     }
 
-    public function show()
+    public function show($id)
     {
         $messages = Post::all();
         return view('manageposts.show', compact('messages'));
