@@ -12,13 +12,18 @@
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <style>
         .post-container {
-            display: flex; /* Use flexbox to create a row */
+            display: flex; 
         }
 
         .post {
-            flex: 1; /* Each post takes up an equal amount of space within the row */
-            padding: 20px; /* Add some padding to each post for spacing */
-            border: 1px solid #ccc; /* Add a border for visual separation */
+            flex: 1;
+            padding: 20px; 
+            border: 1px solid #ccc; 
+        }
+        .img-con{
+            width: 300px;
+            height: 400px; 
+            object-fit: cover; 
         }
     </style>
 </head>
@@ -36,11 +41,13 @@
                         <h5 class="card-title">Post Title:</h5>
                         <p class="card-title">{{ $data->title }}</p>
                         <h5 class="card-title">Body:</h5>
-                        <p class="card-text" style="max-height: 1em; overflow: hidden; text-overflow: ellipsis;">
+                        <p class="card-text" style="max-height: 2em; overflow: hidden; text-overflow: ellipsis;">
                             {{ $data->message }}
                         </p>
                         <h5>Image:</h5>
+                        <div class="img-con">
                         <img src="{{ asset($data->file_path)}}" alt="Image" class="img-fluid">
+                        </div>
                         @if($data->user_id === $user)
                         <a href="{{ route('manageposts.edit', ['id' => $data->id]) }}" class="btn btn-sm btn-info">Edit Post</a>
                         <br>                        
@@ -59,7 +66,10 @@
                     <input name="body" id="your_comment" class="form-control" rows="3"></input>
                 </div>
                 <button type="submit" class="btn btn-sm btn-primary">Publish Comment</button>
+                <a href="{{ route('comments.show', ['post_id' => $data->id]) }}" class=class="btn btn-sm btn-primary">All Comments</a>
+
             </form>
+
             </div>
             </div>
             </div>

@@ -35,7 +35,7 @@ use Illuminate\Support\Facades\Route;
         Route::get('/delete/{id}' , [PostController::class, 'destroy' ])->name('destroy');
     });
     Route::post('/comments/create/{post_id}',     [CommentController::class, 'create'])->name('comments.create');
+    Route::get('/comments/show/{post_id}',[CommentController::class, 'show'])->name('comments.show');
 
-// Route::post('/store-post', 'PostController@store')->name('store-post');
 
 require __DIR__.'/auth.php';

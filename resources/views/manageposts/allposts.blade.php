@@ -9,7 +9,12 @@
     <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.6/dist/umd/popper.min.js"></script>
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
-    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <style>
+        .card-img {
+            height: 200px; 
+            object-fit: cover; 
+        }
+    </style>
 </head>
 <body>
 @php
@@ -19,19 +24,18 @@
     <h2>Posts</h2>
     <div class="row">
         @foreach ($messages as $data)
-            <div class="col-md-6">
-                <div class="card mb-6">
+            <div class="col-md-4 mb-3">
+                <div class="card">
+                    <img src="{{ asset($data->file_path) }}" alt="Image" class="card-img">
                     <div class="card-body">
                         <label class="card-label" for="title">Post Title:</label>
                         <h6 class="card-title" id="title">{{ $data->title }}</h6>
                         <h5 class="card-title">Body:</h5>
-                        <p class="card-text" style="max-height: 1em; overflow: hidden; text-overflow: ellipsis;">
-                            {{ \Illuminate\Support\Str::limit($data->message, 30) }}
+                        <p class="card-text" style="max-height: 3em; overflow: hidden; text-overflow: ellipsis;">
+                            {{ \Illuminate\Support\Str::limit($data->message, 60) }}
                         </p>
-                        <h5>Image:</h5>
-                        <img src="{{ asset($data->file_path) }}" alt="Image" class="img-fluid">
                         <a href="{{ route('manageposts.show', ['id' => $data->id]) }}"
-                           class="btn-red position-absolute" style="bottom: 10px; right: 10px;">View More</a>
+                           class="btn btn-primary">View More</a>
                     </div>
                 </div>
             </div>

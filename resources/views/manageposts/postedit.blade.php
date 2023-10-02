@@ -9,9 +9,15 @@
     <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.6/dist/umd/popper.min.js"></script>
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <style>
+        .adjust{
+            width: 31%;
+            hight: 50%;
+        }
+    </style>
 </head>
 <body>
-    <div class="container">
+    <div class="container , adjust">
         <h2>Edit User Posts</h2>
         <form action="{{ route('manageposts.update', ['id' => $post->id]) }}" method="POST" enctype="multipart/form-data">
             @csrf
@@ -35,7 +41,6 @@
             <div class="form-group">
                 <label for="new_image">New Image:</label>
                 <input type="file" class="form-control-file" id="new_image" name="new_file_path">
-                <!-- You can add validation error message here if needed -->
             </div>
 
             <button type="submit" class="btn btn-primary">Save Changes</button>

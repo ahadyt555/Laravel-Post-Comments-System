@@ -8,6 +8,7 @@ use App\Http\Requests\StorePostRequest;
 use Illuminate\Http\Request;
 use Yoeunes\Toastr\Facades\Toastr;
 use App\Models\Post;
+use App\Models\Comment;
 
 class PostController extends Controller
 {
@@ -22,7 +23,7 @@ class PostController extends Controller
         return view('manageposts.allposts', compact('messages'));
     }
 
-    public function show($id)
+    public function show()
     {
         $messages = Post::all();
         return view('manageposts.show', compact('messages'));
@@ -100,7 +101,7 @@ class PostController extends Controller
                 'user_id' => $user_id,
             ]);
 
-            if ($post) {
+            if ($post->wasRecentlyCreated) {
                 Toastr::success("Post created successfully!", "Success");
             } else {
                 Toastr::error("Failed to create the post. Please try again.", "Error");

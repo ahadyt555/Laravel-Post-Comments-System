@@ -29,7 +29,31 @@ class CommentController extends Controller
 
 
     $comment->save();
+    if($comment->wasRecentlyCreated){
+        return redirect()->back()->with('success', 'Comment added successfully.');
+    }
+    else{
+        return redirect()->back()->with('error', 'Comment Not added.');
+    }
 
-    return redirect()->back()->with('success', 'Comment added successfully.');
+   
 }
+public function show($id)
+{
+    $post = Post::find($id);
+
+    if (!$post) {
+        return redirect()->back()->with("error", "Post not found");
+    }
+
+    $comments = Comment::all();
+
+    return view("comments", [
+        "post" => $post,
+        "comments" => $comments,
+    ]);
+}
+
+
+    
 }
