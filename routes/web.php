@@ -34,7 +34,7 @@ use Illuminate\Support\Facades\Route;
         Route::put('/update/{id}', [PostController::class,'update'])->name('update');
         Route::get('/delete/{id}' , [PostController::class, 'destroy' ])->name('destroy');
     });
-    Route::post('/comments/create/{post_id}',     [CommentController::class, 'create'])->name('comments.create');
+    Route::post('/comments/create/{post_id}',     [CommentController::class, 'store'])->name('comments.create');
     Route::get('/comments/show/{post_id}',[CommentController::class, 'show'])->name('comments.show');
 
 

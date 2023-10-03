@@ -9,35 +9,34 @@ use App\Models\Post;
 
 class CommentController extends Controller
 {
-    public function create(Request $request)
-    {
-        $messages = Post::all();
+    public function store(Request $request)
+{
+    $request->validate([
+        "body" => "required|string",
+    ]);
 
-        foreach ($messages as $post) {
-            $postId = $post->id;
-        }
-        
-        $request->validate([
-            "body" => "required|string",
-        ]);
+    $user = auth()->user();
 
-      $comment =  Comment::create([
-            "post_id" => $postId,
-            "user_id" => auth()->user()->id,
+    foreach ($user->posts as $post) {
+
+        $comment = Comment::create([
+            "post_id" => $post->id,
+            "user_id" => $user->id,
             "body" => $request->input("body"),
         ]);
 
+        $comment->save();
 
-    $comment->save();
-    if($comment->wasRecentlyCreated){
-        return redirect()->back()->with('success', 'Comment added successfully.');
+        if ($comment->wasRecentlyCreated) {
+            return redirect()->back()->with('success', 'Comment added successfully.');
+        } else {
+            return redirect()->back()->with('error', 'Comment Not added.');
+        }
     }
-    else{
-        return redirect()->back()->with('error', 'Comment Not added.');
-    }
+}
+
 
    
-}
 public function show($id)
 {
     $post = Post::find($id);
@@ -46,13 +45,14 @@ public function show($id)
         return redirect()->back()->with("error", "Post not found");
     }
 
-    $comments = Comment::all();
+    $comments = $post->comments;
 
     return view("comments", [
         "post" => $post,
         "comments" => $comments,
     ]);
 }
+
 
 
     
