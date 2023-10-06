@@ -14,13 +14,15 @@ class Post extends Model
     use SoftDeletes;
 
     public function user(): BelongsTo
-    {
-        return $this->belongsTo(User::class, 'user_id');
-    }
-    public function comments(): HasMany
-    {
-        return $this->hasMany(Comment::class, "post_id");
-    }
+{
+    return $this->belongsTo(User::class, 'user_id');
+}
+
+public function comments(): HasMany
+{
+    return $this->hasMany(Comment::class);
+}
+
 
     protected $guarded = ['id'];
 }

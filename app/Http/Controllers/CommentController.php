@@ -9,27 +9,20 @@ use App\Models\Post;
 
 class CommentController extends Controller
 {
-    public function create(Request $request)
+    public function store(Request $request, $post_id)
     {
-        $messages = Post::all();
-
-        foreach ($messages as $post) {
-            $postId = $post->id;
-        }
-        
         $request->validate([
             "body" => "required|string",
         ]);
-
-      $comment =  Comment::create([
-            "post_id" => $postId,
+        $comments = Comment::create([
+            "post_id" => $post_id,
             "user_id" => auth()->user()->id,
             "body" => $request->input("body"),
         ]);
 
 
-    $comment->save();
-    if($comment->wasRecentlyCreated){
+    $comments->save();
+    if($comments->wasRecentlyCreated){
         return redirect()->back()->with('success', 'Comment added successfully.');
     }
     else{

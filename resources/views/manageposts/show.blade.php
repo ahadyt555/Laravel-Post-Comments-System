@@ -58,7 +58,7 @@
 
                 <div class="row mt-4">
                     <div class="col-md-6">
-                        <form class="contact-form" method="POST" action="/comments/create/{post_id}" enctype="multipart/form-data">
+                    <form class="contact-form" method="POST" action="{{ route('comments.store', ['post_id' => $data->id]) }}" enctype="multipart/form-data">
                             @csrf
                             @method("POST")
                 <div class="form-group">

@@ -72,14 +72,26 @@
         
         <div class="btn-group" role="group" aria-label="Basic example">
         @php
-            $user = auth()->user()->id;
-        @endphp
-            @if ($comment->user->id === $user)
-                    <a href="" class="btn btn-sm btn-info btn btn-secondary">Edit</a>                        
-                @csrf
-                @method('DELETE')
-                <a href="" class="btn btn-sm btn-info btn btn-secondary">Delete</a>
-            @endif
+$user = auth()->user();
+$isCommentAuthor = $comment->user->id === $user->id;
+$isPostAuthor = $post->user_id === $user->id;
+@endphp
+
+@if ($isCommentAuthor)
+    <a href="" class="btn btn-sm btn-info btn-secondary">Edit</a>
+    <form method="POST" action="">
+        @csrf
+        @method('DELETE')
+        <button type="submit" class="btn btn-sm btn-info btn-secondary">Delete</button>
+    </form>
+@elseif ($isPostAuthor)
+    <form method="POST" action="">
+        @csrf
+        @method('DELETE')
+        <button type="submit" class="btn btn-sm btn-info btn-secondary">Delete</button>
+    </form>
+@endif
+
     </div>
     </div>
     </div>
@@ -87,36 +99,6 @@
 @endforeach
 
     </div>
-    <script>
-        /**
-  We're defining the event on the `body` element, 
-  because we know the `body` is not going away.
-  Second argument makes sure the callback only fires when 
-  the `click` event happens only on elements marked as `data-editable`
-*/
-$('body').on('click', '[data-editable]', function(){
-  
-  var $el = $(this);
-              
-  var $input = $('<input/>').val( $el.text() );
-  $el.replaceWith( $input );
-  
-  var save = function(){
-    var $p = $('<p data-editable />').text( $input.val() );
-    $input.replaceWith( $p );
-  };
-  
-  /**
-    We're defining the callback with `one`, because we know that
-    the element will be gone just after that, and we don't want 
-    any callbacks leftovers take memory. 
-    Next time `p` turns into `input` this single callback 
-    will be applied again.
-  */
-  $input.one('blur', save).focus();
-  
-});
-    </script>
 
 </body>
 </html>

@@ -8,7 +8,6 @@ use App\Http\Requests\StorePostRequest;
 use Illuminate\Http\Request;
 use Yoeunes\Toastr\Facades\Toastr;
 use App\Models\Post;
-use App\Models\Comment;
 
 class PostController extends Controller
 {
@@ -101,7 +100,7 @@ class PostController extends Controller
                 'user_id' => $user_id,
             ]);
 
-            if ($post->wasRecentlyCreated) {
+            if ($post) {
                 Toastr::success("Post created successfully!", "Success");
             } else {
                 Toastr::error("Failed to create the post. Please try again.", "Error");
