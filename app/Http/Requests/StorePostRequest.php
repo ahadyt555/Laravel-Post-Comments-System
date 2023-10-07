@@ -24,7 +24,7 @@ class StorePostRequest extends FormRequest
         return [
             'title' => 'required|string|max:255',
             'message' => 'required|string',
-            'file_path' => 'required|image|mimes:jpeg,png,jpg,gif|max:2048',
+            'new_file_path' => 'required|image|mimes:jpeg,png,jpg,gif|max:2048',
         ];
     }
 

@@ -1,7 +1,7 @@
 <?php
 
 namespace App\Http\Controllers;
-
+use Yoeunes\Toastr\Facades\Toastr;
 use Illuminate\Http\Request;
 use App\Models\Comment;
 use App\Models\Post;
@@ -45,6 +45,19 @@ public function show($post_id)
     ]);
 }
 
+public function destroy(Request $request, $id)
+{
+    $comments = Comment::find($id);
+    if (!$comments) {
+        return('Comment not found');
+    }
+    if ($comments->delete()) {
+        Toastr::success("Comment deleted successfully!", "Success");
+    } else {
+        Toastr::error("Comment not deleted", "Error");
+    }
 
+    return redirect()->back();
+}
     
 }

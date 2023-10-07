@@ -28,8 +28,8 @@
                 <div class="card">
                     <img src="{{ asset($data->file_path) }}" alt="Image" class="card-img">
                     <div class="card-body">
-                        <label class="card-label" for="title">Post Title:</label>
-                        <h6 class="card-title" id="title">{{ $data->title }}</h6>
+                        <label class="card-label" for="title"><strong>Post Title:</strong></label>
+                        <p class="card-title" id="title">{{ $data->title }}</p>
                         <h5 class="card-title">Body:</h5>
                         <p class="card-text" style="max-height: 3em; overflow: hidden; text-overflow: ellipsis;">
                             {{ \Illuminate\Support\Str::limit($data->message, 60) }}

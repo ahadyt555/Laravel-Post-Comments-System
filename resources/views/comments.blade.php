@@ -5,7 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Edit Posts</title>
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
-    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.6/dist/umd/popper.min.js"></script>
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
@@ -54,7 +54,7 @@
                 <h5>Message:</h5>
             </div>
             <div class="card-body , line">
-                <p class="form-control" id="message" name="message">{{ \Illuminate\Support\Str::limit ($post->message, 30) }}</p>
+                <p class="form-control" id="message , editable-paragraph" name="message">{{ \Illuminate\Support\Str::limit ($post->message, 30) }}</p>
             </div>
             <div class="card-header">
                 <h5>Current Image:</h5>
@@ -68,24 +68,24 @@
     @foreach ($comments as $comment)
     <div class="line">
         <p><strong>{{ $comment->user->name }}</strong></p>
-        <div class="bot"> <p data-editable>{{ $comment->body }}</p>
-        
+        <div class="bot">                 
+        <p data-editable>{{ $comment->body }}</p>
         <div class="btn-group" role="group" aria-label="Basic example">
         @php
-$user = auth()->user();
-$isCommentAuthor = $comment->user->id === $user->id;
-$isPostAuthor = $post->user_id === $user->id;
-@endphp
+            $user = auth()->user();
+            $isCommentAuthor = $comment->user->id === $user->id;
+            $isPostAuthor = $post->user_id === $user->id;
+        @endphp
 
 @if ($isCommentAuthor)
-    <a href="" class="btn btn-sm btn-info btn-secondary">Edit</a>
-    <form method="POST" action="">
+<button class="btn btn-sm btn-info btn-secondary edit-comment">Edit</button>
+    <form method="POST" action="{{ route('comments.destroy', ['id' => $comment->id]) }}">
         @csrf
         @method('DELETE')
-        <button type="submit" class="btn btn-sm btn-info btn-secondary">Delete</button>
+        <button type="submit" class="btn btn-sm btn-info btn-secondary" class="delete-btn">Delete</button>
     </form>
 @elseif ($isPostAuthor)
-    <form method="POST" action="">
+    <form method="POST" action="{{ route('comments.destroy', ['id' => $comment->id]) }}">
         @csrf
         @method('DELETE')
         <button type="submit" class="btn btn-sm btn-info btn-secondary">Delete</button>
@@ -99,6 +99,27 @@ $isPostAuthor = $post->user_id === $user->id;
 @endforeach
 
     </div>
+    <script>
+    $(document).ready(function() {
+        $(".edit-comment").click(function() {
+            var paragraph = $(this).closest(".bot").find("p[data-editable]");
+            var originalText = paragraph.text();
+            var inputField = $("<input>")
+                .attr("type", "text")
+                .addClass("form-control")
+                .val(originalText);
+            paragraph.replaceWith(inputField);
+            inputField.focus();
+            inputField.blur(function() {
+                var editedText = $(this).val();
+                var newParagraph = $("<p>")
+                    .attr("data-editable", "")
+                    .text(editedText);
+                $(this).replaceWith(newParagraph);
+            });
+        });
+    });
+</script
 
 </body>
 </html>

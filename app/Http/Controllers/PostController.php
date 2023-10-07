@@ -67,7 +67,7 @@ class PostController extends Controller
             Toastr::error("Post not updated", "Error");
         }
 
-        return redirect('postedit');
+        return redirect()->back();
     }
 
     public function destroy(Request $request, $id)

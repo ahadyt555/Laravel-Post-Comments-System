@@ -19,6 +19,7 @@ return new class extends Migration
             $table->unsignedBigInteger('user_id');
             $table->unsignedBigInteger('post_id');
             $table->text('body');
+            $table->softDeletes();
             $table->timestamps();
     
         });
