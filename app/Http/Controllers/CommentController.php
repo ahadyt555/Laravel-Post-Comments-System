@@ -7,6 +7,7 @@ use App\Models\Comment;
 use App\Models\Post;
 
 
+
 class CommentController extends Controller
 {
     public function store(Request $request, $post_id)
@@ -53,11 +54,28 @@ public function destroy(Request $request, $id)
     }
     if ($comments->delete()) {
         Toastr::success("Comment deleted successfully!", "Success");
+        return redirect()->back();
     } else {
         Toastr::error("Comment not deleted", "Error");
+        return redirect()->back();
     }
 
     return redirect()->back();
+}
+
+public function update(Request $request, $id)
+{
+    $editedText = $request->input('body');
+    $comment = Comment::findOrFail($id);
+    $comment->body = $editedText;    
+
+    if ($comment) {
+        Toastr::success("Comment Updated successfully!", "Success");
+        return redirect()->back();
+    } else {
+        Toastr::error("Comment not Updated", "Error");
+        return redirect()->back();
+    }
 }
     
 }

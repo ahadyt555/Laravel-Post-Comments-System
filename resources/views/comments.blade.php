@@ -9,6 +9,7 @@
     <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.6/dist/umd/popper.min.js"></script>
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <meta name="csrf-token" content="{{ csrf_token() }}">
     <style>
         .fixed-navbar {
     position: fixed;
@@ -68,9 +69,9 @@
     @foreach ($comments as $comment)
     <div class="line">
         <p><strong>{{ $comment->user->name }}</strong></p>
-        <div class="bot">                 
+        <div class="bot" data-comment-id="{{ $comment->id }}">
         <p data-editable>{{ $comment->body }}</p>
-        <div class="btn-group" role="group" aria-label="Basic example">
+        <div class="btn-group"class="form-control" role="group" aria-label="Basic example">
         @php
             $user = auth()->user();
             $isCommentAuthor = $comment->user->id === $user->id;
@@ -78,7 +79,12 @@
         @endphp
 
 @if ($isCommentAuthor)
-<button class="btn btn-sm btn-info btn-secondary edit-comment">Edit</button>
+    <button class="btn btn-sm btn-info btn-secondary , edit-comment">Edit</button>
+    <form method="POST" action="{{ route('comments.update', ['id' => $comment->id]) }}">
+        @csrf
+        @method('PUT')
+        <button class="btn btn-sm btn-info btn-secondary  edit-comment form-control">Update</button>
+    </form>
     <form method="POST" action="{{ route('comments.destroy', ['id' => $comment->id]) }}">
         @csrf
         @method('DELETE')
@@ -99,27 +105,49 @@
 @endforeach
 
     </div>
+    
     <script>
-    $(document).ready(function() {
-        $(".edit-comment").click(function() {
-            var paragraph = $(this).closest(".bot").find("p[data-editable]");
-            var originalText = paragraph.text();
-            var inputField = $("<input>")
-                .attr("type", "text")
-                .addClass("form-control")
-                .val(originalText);
-            paragraph.replaceWith(inputField);
-            inputField.focus();
-            inputField.blur(function() {
-                var editedText = $(this).val();
-                var newParagraph = $("<p>")
-                    .attr("data-editable", "")
-                    .text(editedText);
-                $(this).replaceWith(newParagraph);
+$(document).ready(function() {
+    $(".edit-comment").click(function() {
+        var botElement = $(this).closest(".bot");
+        var paragraph = botElement.find("p[data-editable]");
+        var originalText = paragraph.text();
+        var inputField = $("<input>")
+            .attr("type", "text")
+            .addClass("form-control")
+            .val(originalText);
+        paragraph.replaceWith(inputField);
+        inputField.focus();
+
+        inputField.blur(function() {
+            var editedText = $(this).val();
+            var newParagraph = $("<p>")
+                .attr("data-editable", "")
+                .text(editedText);
+            $(this).replaceWith(newParagraph);
+
+            var commentId = botElement.data("comment-id");
+
+            $.ajax({
+                type: "PUT",
+                url: "/comments/update/" + commentId, 
+                data: {
+                    _token: $('meta[name="csrf-token"]').attr('content'),
+                    body: editedText
+                },
+                success: function(response) {
+                    console.log("Comment updated successfully.");
+                },
+                error: function(error) {
+                    console.log("Error updating comment: " + error);
+                }
             });
         });
     });
-</script
+});
+</script>
+
+
 
 </body>
 </html>
